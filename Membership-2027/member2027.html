@@ -1,112 +1,180 @@
+<!-- Bootstrap 5.3 -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+<style>
+    .membership-option {
+        position: relative;
+        border: 1px solid #dee2e6;
+        border-radius: 12px;
+        padding: 12px 14px 12px 32px;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .membership-option.recommended {
+        border: 2px solid #FFD111;
+        background: linear-gradient(135deg, #fffdf2 0%, #fff8c9 100%);
+        box-shadow: 0 6px 16px rgba(194, 154, 0, 0.16);
+        padding: 11px 13px;
+    }
+
+    .membership-option.recommended:hover {
+        box-shadow: 0 8px 20px rgba(194, 154, 0, 0.24);
+        transform: translateY(-1px);
+    }
+
+    .membership-option .form-check-input {
+        margin-top: 0.35rem;
+    }
+
+    .membership-option.recommended .form-check-input:checked {
+        background-color: #9a7600;
+        border-color: #9a7600;
+        box-shadow: 0 0 0 0.25rem rgba(255, 209, 17, 0.35);
+    }
+
+    .recommended-badge {
+        display: inline-block;
+        margin-left: 8px;
+        padding: 3px 8px;
+        border-radius: 999px;
+        background: #cc0000;
+        color: #fff;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        vertical-align: middle;
+    }
+
+    .membership-group {
+        border: 2px solid #FFD111;
+        border-radius: 16px;
+        background: linear-gradient(135deg, #fffef8 0%, #fff9d8 100%);
+        box-shadow: 0 8px 22px rgba(194, 154, 0, 0.16);
+    }
+
+    .membership-legend {
+        width: auto;
+        padding: 0 10px;
+        color: #5c4a00;
+        font-size: 1rem;
+        background: #fffef8;
+    }
+</style>
+
 <!-- Form Container Wrapper -->
-<div id="formContainer" style="border: 2px solid #FFD111; padding: 25px; border-radius: 8px; max-width: 500px; background-color: #ffffff; box-shadow: 0 2px 4px rgba(0,0,0,0.05); box-sizing: border-box; font-family: Arial, sans-serif;">
+<div id="formContainer" class="container-sm bg-white rounded-3 shadow-sm p-4 mx-auto" style="max-width: 560px; font-family: Arial, sans-serif;">
     
     <form action="https://script.google.com/macros/s/AKfycbxTCRYgFGuCbX99mfojSQ7_FwYxKEwMbmcQLnrVZNc/dev" method="POST" id="membershipRegistrationForm" novalidate>
         
-<!-- Membership Type -->
-<div style="margin-bottom: 18px;">
-    <label style="font-weight: 600; color: #222222;">Select Membership Type: <span style="color: red;">*</span></label><br>
-    <div style="margin-top: 8px; line-height: 1.8;">
-        <div>
-            <input type="radio" id="annualIndividual" name="membershipType" value="Annual 2027 Individual : $10" checked onchange="toggleFamilyFields()">
-            <label for="annualIndividual" style="font-weight: 500; color: #333333; cursor: pointer;">Annual Individual: <strong>$10</strong></label>
-        </div>
-        <div>
-            <input type="radio" id="lifetimeIndividual" name="membershipType" value="Lifetime Individual: $65" onchange="toggleFamilyFields()">
-            <label for="lifetimeIndividual" style="font-weight: 500; color: #333333; cursor: pointer;">Lifetime Individual: <strong>$65</strong></label>
-        </div>
-        <div>
-            <input type="radio" id="familyLifetime" name="membershipType" value="Lifetime Family : $120" onchange="toggleFamilyFields()">
-            <label for="familyLifetime" style="font-weight: 500; color: #333333; cursor: pointer;">
-                Family Lifetime: <strong>$120</strong> <span style="font-size: 13px; color: #666666;">(Members of the same household)</span>
-            </label>
-        </div>
-    </div>
-</div>
+        <!-- Membership Type -->
+        <fieldset class="membership-group mb-4 p-3">
+            <legend class="membership-legend px-2 fw-bold mb-3 text-danger">Select Membership Type: <span class="text-danger">*</span></legend>
+            <div class="d-grid gap-2">
+                <div class="form-check membership-option">
+                    <input class="form-check-input" type="radio" id="annualIndividual" name="membershipType" value="Annual 2027 Individual" checked onchange="toggleFamilyFields()">
+                    <label class="form-check-label w-100" for="annualIndividual">
+                        <span class="fw-semibold">Annual Individual:</span> <strong class="fs-5 text-primary">$10</strong>
+                    </label>
+                </div>
+                <div class="form-check membership-option">
+                    <input class="form-check-input" type="radio" id="lifetimeIndividual" name="membershipType" value="Lifetime Individual" onchange="toggleFamilyFields()">
+                    <label class="form-check-label w-100" for="lifetimeIndividual">
+                        <span class="fw-semibold">Lifetime Individual:</span> <strong class="fs-5 text-primary">$65</strong>
+                    </label>
+                </div>
+                <div class="form-check membership-option">
+                    <input class="form-check-input" type="radio" id="familyLifetime" name="membershipType" value="Lifetime Family" onchange="toggleFamilyFields()">
+                    <label class="form-check-label w-100" for="familyLifetime">
+                        <span class="fw-semibold">Family Lifetime:</span> <strong class="fs-5 text-primary">$120</strong>
+                        <span class="recommended-badge">MOST POPULAR</span>
+                        <small class="d-block text-secondary mt-1">Members of the same household</small>
+                    </label>
+                </div>
+            </div>
+        </fieldset>
 
         <!-- Full Name -->
-        <div style="margin-bottom: 15px;">
-            <label for="fullName" style="font-weight: 600; color: #222222;">Full Name: <span style="color: red;">*</span></label><br>
-            <input type="text" id="fullName" name="fullName" required style="width: 100%; margin-top: 5px; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
-            <span class="error-msg" id="err-fullName" style="color: red; font-size: 13px; display: none; margin-top: 3px;">Please enter your full name.</span>
+        <div class="mb-3">
+            <label class="form-label fw-semibold" for="fullName">Full Name: <span class="text-danger">*</span></label>
+            <input class="form-control" type="text" id="fullName" name="fullName" required>
+            <div class="error-msg text-danger small mt-1" id="err-fullName" style="display: none;">Please enter your full name.</div>
         </div>
 
         <!-- Phone Number -->
-        <div style="margin-bottom: 15px;">
-            <label for="phone" style="font-weight: 600; color: #222222;">Phone Number: <span style="color: red;">*</span></label><br>
-            <input type="tel" id="phone" name="phone" required style="width: 100%; margin-top: 5px; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
-            <span class="error-msg" id="err-phone" style="color: red; font-size: 13px; display: none; margin-top: 3px;">Please enter your phone number.</span>
+        <div class="mb-3">
+            <label class="form-label fw-semibold" for="phone">Phone Number: <span class="text-danger">*</span></label>
+            <input class="form-control" type="tel" id="phone" name="phone" required>
+            <div class="error-msg text-danger small mt-1" id="err-phone" style="display: none;">Please enter your phone number.</div>
         </div>
 
         <!-- Email Address -->
-        <div style="margin-bottom: 15px;">
-            <label for="email" style="font-weight: 600; color: #222222;">Email Address: <span style="color: red;">*</span></label><br>
-            <input type="email" id="email" name="email" required style="width: 100%; margin-top: 5px; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
-            <span class="error-msg" id="err-email" style="color: red; font-size: 13px; display: none; margin-top: 3px;">Please enter a valid email address.</span>
+        <div class="mb-3">
+            <label class="form-label fw-semibold" for="email">Email Address: <span class="text-danger">*</span></label>
+            <input class="form-control" type="email" id="email" name="email" required>
+            <div class="error-msg text-danger small mt-1" id="err-email" style="display: none;">Please enter a valid email address.</div>
         </div>
 
         <!-- Home Address -->
-        <div style="margin-bottom: 15px;">
-            <label for="homeAddress" style="font-weight: 600; color: #222222;">Home Address: <span style="color: red;">*</span></label><br>
-            <textarea id="homeAddress" name="homeAddress" rows="2" placeholder="Street Address, City, State, ZIP" required style="width: 100%; margin-top: 5px; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; resize: vertical;"></textarea>
-            <span class="error-msg" id="err-homeAddress" style="color: red; font-size: 13px; display: none; margin-top: 3px;">Please enter your home address.</span>
+        <div class="mb-3">
+            <label class="form-label fw-semibold" for="homeAddress">Home Address: <span class="text-danger">*</span></label>
+            <textarea class="form-control" id="homeAddress" name="homeAddress" rows="2" placeholder="Street Address, City, State, ZIP" required></textarea>
+            <div class="error-msg text-danger small mt-1" id="err-homeAddress" style="display: none;">Please enter your home address.</div>
         </div>
 
-<!-- Conditional Family Lifetime Section (Hidden by default) -->
-<div id="familyFieldsContainer" style="display: none; background-color: #f9f9f9; padding: 15px; border-left: 3px solid #c4c2b9; border-right: 3px solid #c4c2b9; border-radius: 4px; margin-bottom: 15px;">
-    <div style="font-weight: 600; color: #444444; margin-bottom: 10px; font-size: 14px;">Spouse Details (Required for Family Lifetime)</div>
-    
-    <!-- Spouse Full Name -->
-    <div style="margin-bottom: 12px;">
-        <label for="spouseName" style="font-weight: 600; color: #222222;">Spouse Full Name: <span style="color: red;">*</span></label><br>
-        <input type="text" id="spouseName" name="spouseName" style="width: 100%; margin-top: 5px; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
-        <span class="error-msg" id="err-spouseName" style="color: red; font-size: 13px; display: none; margin-top: 3px;">Please enter your spouse's full name.</span>
-    </div>
+        <!-- Conditional Family Lifetime Section -->
+        <div id="familyFieldsContainer" class="card card-body bg-light mb-3 border-start border-3" style="display: none; border-left-color: #c4c2b9 !important;">
+            <div class="mb-3 px-3 py-2 rounded-2 border" style="background: #fff4c2; border-color: #FFD111 !important;">
+                <h5 class="fw-bold mb-1" style="color: #5c4a00;">Spouse Details</h5>
+                <div class="text-secondary small">Required for Family Lifetime</div>
+            </div>
 
-    <!-- Spouse Phone Number -->
-    <div style="margin-bottom: 12px;">
-        <label for="spousePhone" style="font-weight: 600; color: #222222;">Spouse Phone Number: <span style="color: red;">*</span></label><br>
-        <input type="tel" id="spousePhone" name="spousePhone" style="width: 100%; margin-top: 5px; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
-        <span class="error-msg" id="err-spousePhone" style="color: red; font-size: 13px; display: none; margin-top: 3px;">Please enter your spouse's phone number.</span>
-    </div>
+            <div class="mb-3">
+                <label class="form-label fw-semibold" for="spouseName">Spouse Full Name: <span class="text-danger">*</span></label>
+                <input class="form-control" type="text" id="spouseName" name="spouseName">
+                <div class="error-msg text-danger small mt-1" id="err-spouseName" style="display: none;">Please enter your spouse's full name.</div>
+            </div>
 
-    <!-- Spouse Email Address (Optional) -->
-    <div style="margin-bottom: 5px;">
-        <label for="spouseEmail" style="font-weight: 600; color: #222222;">Spouse Email Address:</label><br>
-        <input type="email" id="spouseEmail" name="spouseEmail" style="width: 100%; margin-top: 5px; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
-        <span class="error-msg" id="err-spouseEmail" style="color: red; font-size: 13px; display: none; margin-top: 3px;">Please enter a valid email address.</span>
-    </div>
-</div>
+            <div class="mb-3">
+                <label class="form-label fw-semibold" for="spousePhone">Spouse Phone Number: <span class="text-danger">*</span></label>
+                <input class="form-control" type="tel" id="spousePhone" name="spousePhone">
+                <div class="error-msg text-danger small mt-1" id="err-spousePhone" style="display: none;">Please enter your spouse's phone number.</div>
+            </div>
+
+            <div>
+                <label class="form-label fw-semibold" for="spouseEmail">Spouse Email Address:</label>
+                <input class="form-control" type="email" id="spouseEmail" name="spouseEmail">
+                <div class="error-msg text-danger small mt-1" id="err-spouseEmail" style="display: none;">Please enter a valid email address.</div>
+            </div>
+        </div>
 
         <!-- Payment Mode -->
-<!-- Payment Mode -->
-<div style="margin-bottom: 20px;">
-    <label for="paymentMode" style="font-weight: 600; color: #222222;">Payment Method: <span style="color: red;">*</span></label><br>
-    <select id="paymentMode" name="paymentMode" required style="width: 100%; margin-top: 5px; padding: 9px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; background-color: #fff;">
-        <option value="" disabled selected>-- Select a Payment Method --</option>
-        <option value="Zelle">Zelle</option>
-        <option value="Check">Check</option>
-    </select>
-    <span class="error-msg" id="err-paymentMode" style="color: red; font-size: 13px; display: none; margin-top: 3px;">Please select a payment method.</span>
+        <div class="mb-4 p-3 border border-primary border-2 rounded-3" style="background: #f8fbff;">
+            <label class="form-label fw-bold text-primary" for="paymentMode">Payment Method: <span class="text-danger">*</span></label>
+            <select class="form-select" id="paymentMode" name="paymentMode" required>
+                <option value="" disabled selected>-- Select a Payment Method --</option>
+                <option value="Zelle">Zelle</option>
+                <option value="Check">Check</option>
+            </select>
+            <div class="error-msg text-danger small mt-1" id="err-paymentMode" style="display: none;">Please select a payment method.</div>
+        </div>
 
-    <!-- Payment Details Information Box -->
-    <div style="margin-top: 10px; padding: 12px; background-color: #f9f9f9; border-left: 3px solid #c4c2b9; border-right: 3px solid #c4c2b9;border-radius: 4px; font-size: 13px; color: #444444; line-height: 1.5;">
-        <div style="font-weight: 600; color: #222222; margin-bottom: 4px;">Payment Instructions:</div>
-        <div style="margin-bottom: 4px;">• <strong>Zelle:</strong> Send payment to <strong>msmi.indianapolis@gmail.com</strong></div>
-        <div>• <strong>Check:</strong> Make payable to <strong>Maharashtra Sneha Mandal of Indiana</strong></div>
-    </div>
-</div>
+        <div class="alert alert-light border-start border-3 small mb-4" style="border-left-color: #c4c2b9 !important;">
+            <div class="fw-semibold mb-1" style="color: #fd7e14;">Payment Instructions:</div>
+            <div class="mb-2"><i class="bi bi-phone-fill text-success me-2"></i><strong>Zelle:</strong> Send payment to <strong>msmi.indianapolis@gmail.com</strong></div>
+            <div><i class="bi bi-envelope-fill text-success me-2"></i><strong>Check:</strong> Make payable to <strong>Maharashtra Sneha Mandal of Indiana</strong></div>
+        </div>
 
-
-        <!-- Hidden Committee CC Emails (Comma-separated if adding more) -->
+        <input type="hidden" id="emailTeam" name="emailTeam" value="sameertalar@gmail.com">
+        
+        <!-- Submit Button -->
         <div>
-            <input type="hidden" id="emailTeam" name="emailTeam" value="sameertalar@gmail.com">
-            <button type="submit" style="width: 100%; padding: 12px; background-color: #CC0000; color: #ffffff; border: none; border-radius: 7px; font-weight: bold; font-size: 16px; cursor: pointer; transition: background-color 0.2s;">Submit Registration</button>
+            <button type="submit" class="btn btn-danger btn-lg fw-bold px-5 py-2">Submit Registration</button>
         </div>
     </form>
 
-    <!-- Feedback Message Box -->
-    <div id="formFeedback" style="font-weight: bold; display: none; text-align: center; font-size: 16px; line-height: 1.6;"></div>
+    <div id="formFeedback" class="fw-bold text-center mt-3" style="display: none; font-size: 16px; line-height: 1.6;"></div>
 </div>
 
 <script>
@@ -126,8 +194,6 @@ function toggleFamilyFields() {
         familyContainer.style.setProperty('display', 'none', 'important');
         spouseName.removeAttribute('required');
         spousePhone.removeAttribute('required');
-        
-        // Clear values and error messages when hidden
         spouseName.value = '';
         spousePhone.value = '';
         spouseEmail.value = '';
@@ -137,7 +203,6 @@ function toggleFamilyFields() {
     }
 }
 
-// Run once on page load to guarantee correct initial state
 document.addEventListener('DOMContentLoaded', toggleFamilyFields);
 
 // 2. Form Validation and Submission to Google Apps Script
@@ -145,22 +210,18 @@ document.getElementById('membershipRegistrationForm').addEventListener('submit',
     e.preventDefault();
     const form = this;
     const feedback = document.getElementById('formFeedback');
-    
-    // Clear previous errors
+
     document.querySelectorAll('.error-msg').forEach(el => el.style.display = 'none');
     let isValid = true;
 
-    // Standard field extractions
     const selectedMembership = document.querySelector('input[name="membershipType"]:checked').value;
     const fullName = document.getElementById('fullName');
     const phone = document.getElementById('phone');
     const email = document.getElementById('email');
     const homeAddress = document.getElementById('homeAddress');
     const paymentMode = document.getElementById('paymentMode');
-
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    // Validate required main fields
     if (!fullName.value.trim()) {
         document.getElementById('err-fullName').style.display = 'block';
         isValid = false;
@@ -182,8 +243,7 @@ document.getElementById('membershipRegistrationForm').addEventListener('submit',
         isValid = false;
     }
 
-    // Validate Spouse fields ONLY if Family Lifetime is selected
-    if (selectedMembership === 'Family Lifetime: $120') {
+    if (selectedMembership === 'Lifetime Family') {
         const spouseName = document.getElementById('spouseName');
         const spousePhone = document.getElementById('spousePhone');
         const spouseEmail = document.getElementById('spouseEmail');
@@ -196,8 +256,7 @@ document.getElementById('membershipRegistrationForm').addEventListener('submit',
             document.getElementById('err-spousePhone').style.display = 'block';
             isValid = false;
         }
-        // Spouse email is optional, but if entered, must be a valid format
-        if (spouseEmail.value.trim() !== "" && !emailRegex.test(spouseEmail.value.trim())) {
+        if (spouseEmail.value.trim() !== '' && !emailRegex.test(spouseEmail.value.trim())) {
             document.getElementById('err-spouseEmail').style.display = 'block';
             isValid = false;
         }
@@ -205,12 +264,9 @@ document.getElementById('membershipRegistrationForm').addEventListener('submit',
 
     if (!isValid) return;
 
-    // Show initial status inside the frame
     feedback.style.color = '#333333';
     feedback.innerText = 'Submitting your membership registration...';
     feedback.style.display = 'block';
-    
-    // Smoothly dim the form fields during submission
     form.style.opacity = '0.4';
     form.style.pointerEvents = 'none';
 
@@ -220,7 +276,7 @@ document.getElementById('membershipRegistrationForm').addEventListener('submit',
     })
     .then(response => response.json())
     .then(data => {
-        if(data.result === 'success') {
+        if (data.result === 'success') {
             form.style.display = 'none';
             feedback.style.color = 'green';
             feedback.innerHTML = '🎉 Success!<br><br>Your MSMI 2027 Membership registration has been saved and a confirmation email has been sent.';
