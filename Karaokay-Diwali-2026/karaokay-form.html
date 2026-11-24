@@ -1,0 +1,229 @@
+
+<!-- Form Container Wrapper -->
+<div id="formContainer" style="display:none;border: 2px solid #FFD111; padding: 25px; border-radius: 8px; max-width: 450px; background-color: #ffffff; box-shadow: 0 2px 4px rgba(0,0,0,0.05); box-sizing: border-box;">
+    
+    <form action="https://script.google.com/macros/s/AKfycbzJIyJCYYhfKxmGOHl9KyNije67NA1ZWS9v81p7uSf-yi-VmyVBQtluTBlAAMddx6iUSQ/exec" method="POST" id="customRegistrationForm" novalidate>
+        
+        <div style="margin-bottom: 15px;">
+            <label for="contactName" style="font-weight: 600; color: #222222;">Contact Name: <span style="color: red;">*</span></label><br>
+            <input type="text" id="contactName" name="contactName" required style="width: 100%; margin-top: 5px; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+            <span class="error-msg" id="err-contactName" style="color: red; font-size: 13px; display: none; margin-top: 3px;">Please enter the contact name.</span>
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label for="email" style="font-weight: 600; color: #222222;">Email Address: <span style="color: red;">*</span></label><br>
+            <input type="email" id="email" name="email" required style="width: 100%; margin-top: 5px; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+            <span class="error-msg" id="err-email" style="color: red; font-size: 13px; display: none; margin-top: 3px;">Please enter a valid email address.</span>
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label for="phone" style="font-weight: 600; color: #222222;">Phone Number: <span style="color: red;">*</span></label><br>
+            <input type="tel" id="phone" name="phone" required style="width: 100%; margin-top: 5px; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+            <span class="error-msg" id="err-phone" style="color: red; font-size: 13px; display: none; margin-top: 3px;">Please enter your phone number.</span>
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label for="participants" style="font-weight: 600; color: #222222;">Participants Names: <span style="color: red;">*</span></label><br>
+            <input type="text" id="participants" name="participants" placeholder="List names of all participants performing" required style="width: 100%; margin-top: 5px; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+            <span class="error-msg" id="err-participants" style="color: red; font-size: 13px; display: none; margin-top: 3px;">Please specify the participants.</span>
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label for="duration" style="font-weight: 600; color: #222222;">Song Duration: <span style="color: red;">*</span></label><br>
+            <input type="text" id="duration" name="duration" placeholder="Max 4 minutes" required style="width: 100%; margin-top: 5px; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+            <span class="error-msg" id="err-duration" style="color: red; font-size: 13px; display: none; margin-top: 3px;">Please specify the song duration.</span>
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label style="font-weight: 600; color: #222222;">Performance Type: <span style="color: red;">*</span></label><br>
+            <div style="margin-top: 5px;">
+                <input type="radio" id="solo" name="performanceType" value="Solo" checked>
+                <label for="solo" style="font-weight: 500; color: #333333; margin-right: 15px;">Solo</label>
+                <input type="radio" id="duet" name="performanceType" value="Duet">
+                <label for="duet" style="font-weight: 500; color: #333333;">Duet</label>
+            </div>
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label for="songNames" style="font-weight: 600; color: #222222;">Song Names :</label><br>
+            <textarea id="songNames" name="songNames" rows="1" placeholder="List of Songs" style="width: 100%; margin-top: 5px; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; resize: vertical;"></textarea>
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label for="notes" style="font-weight: 600; color: #222222;">Additional Instructions / Comments:</label><br>
+            <textarea id="notes" name="notes" rows="1" style="width: 100%; margin-top: 5px; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; resize: vertical;"></textarea>
+        </div>
+
+   
+
+        <div><input type="hidden" id="emailTeam" name="emailTeam" value="sameertalar@gmail.com">
+            <button type="submit" style="width: 100%; padding: 12px; background-color: #CC0000; color: #ffffff; border: none; border-radius: 7px; font-weight: bold; font-size: 16px; cursor: pointer; transition: background-color 0.2s;">Submit</button>
+        </div>
+    </form>
+
+    <!-- Feedback Message Box (Kept inside the border frame for a clean layout) -->
+    <div id="formFeedback" style="font-weight: bold; display: none; text-align: center; font-size: 16px; line-height: 1.6;"></div>
+</div>
+
+<script>
+document.getElementById('customRegistrationForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const form = this;
+    const feedback = document.getElementById('formFeedback');
+    
+    // Clear previous errors
+    document.querySelectorAll('.error-msg').forEach(el => el.style.display = 'none');
+    let isValid = true;
+
+    // Field extractions
+    const contactName = document.getElementById('contactName');
+    const email = document.getElementById('email');
+    const phone = document.getElementById('phone');
+    const participants = document.getElementById('participants');
+    const duration = document.getElementById('duration');
+
+    // Email validation expression
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    // Standard field validations
+    if (!contactName.value.trim()) {
+        document.getElementById('err-contactName').style.display = 'block';
+        isValid = false;
+    }
+    if (!emailRegex.test(email.value.trim())) {
+        document.getElementById('err-email').style.display = 'block';
+        isValid = false;
+    }
+    if (!phone.value.trim()) {
+        document.getElementById('err-phone').style.display = 'block';
+        isValid = false;
+    }
+    if (!participants.value.trim()) {
+        document.getElementById('err-participants').style.display = 'block';
+        isValid = false;
+    }
+    if (!duration.value.trim()) {
+        document.getElementById('err-duration').style.display = 'block';
+        isValid = false;
+    }
+
+    if (!isValid) return;
+
+    // Show initial status inside the frame
+    feedback.style.color = '#333333';
+    feedback.innerText = 'Submitting your registration...';
+    feedback.style.display = 'block';
+    
+    // Smoothly dim the form fields to show submission progress
+    form.style.opacity = '0.4';
+    form.style.pointerEvents = 'none';
+
+    fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if(data.result === 'success') {
+            // Hides form elements completely upon successful storage execution
+            form.style.display = 'none';
+            feedback.style.color = 'green';
+            feedback.innerHTML = '🎉 Success!<br><br>Your registration has been saved and a confirmation email was sent.';
+        } else {
+            // Restore form access if database execution throws an exception
+            form.style.opacity = '1';
+            form.style.pointerEvents = 'auto';
+            feedback.style.color = 'red';
+            feedback.innerText = 'There was an error saving your data: ' + data.error;
+        }
+    })
+    .catch(error => {
+        // Restore form access if submission network layer fails entirely
+        form.style.opacity = '1';
+        form.style.pointerEvents = 'auto';
+        feedback.style.color = 'red';
+        feedback.innerText = 'Submission error. Please contact MSMI Committee.';
+    });
+});
+</script>
+
+
+
+
+
+Google Script
+
+function doPost(e) {
+  try {
+    var targetGid = 1146373719; 
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var sheets = ss.getSheets();
+    var sheet = null;
+    
+    for (var i = 0; i < sheets.length; i++) {
+      if (sheets[i].getSheetId() === targetGid) {
+        sheet = sheets[i];
+        break;
+      }
+    }
+    
+    if (!sheet) {
+      return ContentService.createTextOutput(JSON.stringify({"result": "error", "error": "Tab with ID " + targetGid + " not found."}))
+                           .setMimeType(ContentService.MimeType.JSON);
+    }
+
+    var data = e.parameter;
+    
+    var contactName = data.contactName || "";
+    var email = data.email || "";
+    var phone = data.phone || "";
+    var participants = data.participants || "";
+    var duration = data.duration || "";
+    var performanceType = data.performanceType || "";
+    var songNames = data.songNames || "";
+    var notes = data.notes || ""; 
+    var timestamp = new Date();
+    var emailTeam = data.emailTeam || "";
+    
+    // Append fields to Sheet
+    sheet.appendRow([timestamp, contactName, email, phone, participants, duration, performanceType, songNames, notes]);
+    
+    // Send HTML Confirmation Email with BCC Configuration
+    if (email !== "") {
+      var subject = "🪔 MSMI Diwali Sandhya 2026 Entry";
+      
+      // Building the HTML Structure with clean CSS typography styling
+      var htmlBody = "<div style='font-family: Arial, sans-serif; font-size: 14px; color: #333333; line-height: 1.6;'>" +
+                     "<p>Hello " + contactName + ",</p>" +
+                     "<p>Thank you for registering. Here are your details:</p>" +
+                     "<ul style='padding-left: 20px; margin: 15px 0;'>" +
+                       "<li style='margin-bottom: 5px;'><strong>Phone:</strong> " + phone + "</li>" +
+                       "<li style='margin-bottom: 5px;'><strong>Participants:</strong> " + participants + "</li>" +
+                       "<li style='margin-bottom: 5px;'><strong>Song Duration:</strong> " + duration + "</li>" +
+                       "<li style='margin-bottom: 5px;'><strong>Performance Type:</strong> " + performanceType + "</li>" +
+                       "<li style='margin-bottom: 5px;'><strong>Song Names:</strong> " + (songNames ? songNames : "N/A") + "</li>" +
+                       "<li style='margin-bottom: 5px;'><strong>Additional Instructions / Comments:</strong> " + (notes ? notes : "N/A") + "</li>" +
+                     "</ul>" +
+                     "<p>🎵 Please send your audio files to ✉️ <a href='mailto:indymsmi@gmail.com'>indymsmi@gmail.com</a></p>" +
+                     "<p>We look forward to your performance!</p>" +
+                     "<p>Regards,<br>" +
+                     "<span style='font-style: italic; color: #555555;'>MSMI Committee 2026</span></p>" +
+                   "</div>";
+                      
+      // Advanced parameters supporting explicit HTML body and BCC targets simultaneously
+      MailApp.sendEmail({
+        to: email,
+        bcc: emailTeam,
+        subject: subject,
+        htmlBody: htmlBody
+      });
+    }
+    
+    return ContentService.createTextOutput(JSON.stringify({"result": "success"}))
+                         .setMimeType(ContentService.MimeType.JSON);
+                         
+  } catch (error) {
+    return ContentService.createTextOutput(JSON.stringify({"result": "error", "error": error.toString()}))
+                         .setMimeType(ContentService.MimeType.JSON);
+  }
+}
