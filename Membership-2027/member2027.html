@@ -61,13 +61,26 @@
         font-size: 1rem;
         background: #fffef8;
     }
+
+    #formContainer {
+        font-size: 1.2em;
+    }
+
+    #formContainer .form-control,
+    #formContainer .form-select,
+    #formContainer .form-label,
+    #formContainer .form-check-label,
+    #formContainer .membership-legend,
+    #formContainer .btn {
+        font-size: 1.2em;
+    }
 </style>
 
 <!-- Form Container Wrapper -->
-<div id="formContainer" class="container-sm bg-white rounded-3 shadow-sm p-4 mx-auto" style="max-width: 560px; font-family: Arial, sans-serif;">
+<div id="formContainer" class="container-sm bg-white rounded-3 shadow-sm  mx-auto" style="max-width: 560px; ">
     
     <form action="https://script.google.com/macros/s/AKfycbx83fNhA-sRpi8jufHtUP6VGdyGUHconJUMkak-ZL2FsqRMqQHEJdusGztoFL_mvSbj/exec" method="POST" id="membershipRegistrationForm" novalidate>
-        <div class="text-center mb-4">
+        <div class="mb-4">
             Please complete the membership form and make a payment to become a registered MSMI member.
         </div>
         
@@ -76,13 +89,13 @@
             <legend class="membership-legend px-2 fw-bold mb-3 text-danger">Select Membership Type: <span class="text-danger">*</span></legend>
             <div class="d-grid gap-2">
                 <div class="form-check membership-option">
-                    <input class="form-check-input" type="radio" id="annualIndividual" name="membershipType" value="Annual 2027 Individual" checked onchange="toggleFamilyFields()">
+                    <input class="form-check-input" type="radio" id="annualIndividual" name="membershipType" value="Annual 2027 Individual" onchange="toggleFamilyFields()">
                     <label class="form-check-label w-100" for="annualIndividual">
                         <span class="fw-semibold">Annual (Year 2027) Individual:</span> <strong class="fs-5 text-primary">$10</strong>
                     </label>
                 </div>
                 <div class="form-check membership-option">
-                    <input class="form-check-input" type="radio" id="lifetimeIndividual" name="membershipType" value="Lifetime Individual" onchange="toggleFamilyFields()">
+                    <input class="form-check-input" type="radio" id="lifetimeIndividual" name="membershipType" value="Lifetime Individual" checked onchange="toggleFamilyFields()">
                     <label class="form-check-label w-100" for="lifetimeIndividual">
                         <span class="fw-semibold">Lifetime Individual:</span> <strong class="fs-5 text-primary">$65</strong>
                     </label>
