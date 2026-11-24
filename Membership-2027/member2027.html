@@ -66,7 +66,10 @@
 <!-- Form Container Wrapper -->
 <div id="formContainer" class="container-sm bg-white rounded-3 shadow-sm p-4 mx-auto" style="max-width: 560px; font-family: Arial, sans-serif;">
     
-    <form action="https://script.google.com/macros/s/AKfycbxTCRYgFGuCbX99mfojSQ7_FwYxKEwMbmcQLnrVZNc/dev" method="POST" id="membershipRegistrationForm" novalidate>
+    <form action="https://script.google.com/macros/s/AKfycbx83fNhA-sRpi8jufHtUP6VGdyGUHconJUMkak-ZL2FsqRMqQHEJdusGztoFL_mvSbj/exec" method="POST" id="membershipRegistrationForm" novalidate>
+        <div class="text-center mb-4">
+            Please complete the membership form and make a payment to become a registered MSMI member.
+        </div>
         
         <!-- Membership Type -->
         <fieldset class="membership-group mb-4 p-3">
@@ -75,7 +78,7 @@
                 <div class="form-check membership-option">
                     <input class="form-check-input" type="radio" id="annualIndividual" name="membershipType" value="Annual 2027 Individual" checked onchange="toggleFamilyFields()">
                     <label class="form-check-label w-100" for="annualIndividual">
-                        <span class="fw-semibold">Annual Individual:</span> <strong class="fs-5 text-primary">$10</strong>
+                        <span class="fw-semibold">Annual (Year 2027) Individual:</span> <strong class="fs-5 text-primary">$10</strong>
                     </label>
                 </div>
                 <div class="form-check membership-option">
@@ -87,7 +90,7 @@
                 <div class="form-check membership-option">
                     <input class="form-check-input" type="radio" id="familyLifetime" name="membershipType" value="Lifetime Family" onchange="toggleFamilyFields()">
                     <label class="form-check-label w-100" for="familyLifetime">
-                        <span class="fw-semibold">Family Lifetime:</span> <strong class="fs-5 text-primary">$120</strong>
+                        <span class="fw-semibold">Lifetime Family:</span> <strong class="fs-5 text-primary">$120</strong>
                         <span class="recommended-badge">MOST POPULAR</span>
                         <small class="d-block text-secondary mt-1">Members of the same household</small>
                     </label>
@@ -119,7 +122,7 @@
         <!-- Home Address -->
         <div class="mb-3">
             <label class="form-label fw-semibold" for="homeAddress">Home Address: <span class="text-danger">*</span></label>
-            <textarea class="form-control" id="homeAddress" name="homeAddress" rows="2" placeholder="Street Address, City, State, ZIP" required></textarea>
+            <input class="form-control" type="text" id="homeAddress" name="homeAddress" placeholder="Street Address, City, State, ZIP" required>
             <div class="error-msg text-danger small mt-1" id="err-homeAddress" style="display: none;">Please enter your home address.</div>
         </div>
 
@@ -166,7 +169,7 @@
             <div><i class="bi bi-envelope-fill text-success me-2"></i><strong>Check:</strong> Make payable to <strong>Maharashtra Sneha Mandal of Indiana</strong></div>
         </div>
 
-        <input type="hidden" id="emailTeam" name="emailTeam" value="sameertalar@gmail.com">
+        <input type="hidden" id="emailTeam" name="emailTeam" value="sameer.talar@uhc.com">
         
         <!-- Submit Button -->
         <div>
@@ -279,19 +282,17 @@ document.getElementById('membershipRegistrationForm').addEventListener('submit',
         if (data.result === 'success') {
             form.style.display = 'none';
             feedback.style.color = 'green';
-            feedback.innerHTML = '🎉 Success!<br><br>Your MSMI 2027 Membership registration has been saved and a confirmation email has been sent.';
+            feedback.innerHTML = '<div class="rounded-3 border border-success-subtle bg-success-subtle p-4 mx-auto" style="max-width: 480px;"><div class="display-6 mb-2" aria-hidden="true">✓</div><h4 class="fw-bold text-success mb-3">Registration Successful!</h4><p class="mb-0 text-dark">Your MSMI 2027 Membership registration has been saved, and a confirmation email has been sent.</p></div>';
         } else {
             form.style.opacity = '1';
             form.style.pointerEvents = 'auto';
-            feedback.style.color = 'red';
-            feedback.innerText = 'There was an error saving your data: ' + data.error;
+            feedback.innerHTML = '<div class="rounded-3 border border-danger-subtle bg-danger-subtle p-4 mx-auto" style="max-width: 480px;"><div class="display-6 mb-2" aria-hidden="true">!</div><h4 class="fw-bold text-danger mb-3">Submission Unsuccessful</h4><p class="mb-0 text-dark">There was an error saving your registration. Please try again or contact the MSMI Committee if the issue continues.</p></div>';
         }
     })
     .catch(error => {
         form.style.opacity = '1';
         form.style.pointerEvents = 'auto';
-        feedback.style.color = 'red';
-        feedback.innerText = 'Submission error. Please contact the MSMI Committee.';
+        feedback.innerHTML = '<div class="rounded-3 border border-danger-subtle bg-danger-subtle p-4 mx-auto" style="max-width: 480px;"><div class="display-6 mb-2" aria-hidden="true">!</div><h4 class="fw-bold text-danger mb-3">Submission Unsuccessful</h4><p class="mb-0 text-dark">Please try again or contact the MSMI Committee if the issue continues.</p></div>';
     });
 });
 </script>
