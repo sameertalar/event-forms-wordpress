@@ -25,25 +25,30 @@ function doPost(e) {
     var phone = data.phone || "";
     var email = data.email || "";
     var homeAddress = data.homeAddress || "";
-    var paymentMode = data.paymentMode || "";
+    var paymentMode = String(data.paymentMode || "").trim();
     var spouseName = data.spouseName || "";
     var spousePhone = data.spousePhone || "";
     var spouseEmail = data.spouseEmail || "";
     var emailTeam = data.emailTeam || "";
     
     // Append fields to Sheet matching your column order
-    sheet.appendRow([
-      timestamp, 
-      membershipType, 
-      fullName, 
-      phone, 
-      email, 
-      homeAddress, 
-      paymentMode, 
-      spouseName, 
-      spousePhone, 
-      spouseEmail
-    ]);
+    var lastRow = sheet.getLastRow();
+    var rowValues = [
+      timestamp,
+      membershipType,
+      fullName,
+      phone,
+      email,
+      homeAddress,
+      spouseName,
+      spousePhone,
+      spouseEmail,
+      paymentMode
+    ];
+
+    sheet.appendRow(rowValues);
+    lastRow = sheet.getLastRow();
+    sheet.getRange(lastRow, 10).setValue(paymentMode); // Column J
     
     // Send HTML Confirmation Email with CC Configuration
     if (email !== "") {
@@ -60,9 +65,9 @@ function doPost(e) {
       // Tailored payment instructions based on selected dropdown option
       var paymentInstructions = "";
       if (paymentMode === "Zelle") {
-        paymentInstructions = "<p><strong>Payment Instructions (Zelle):</strong> Please send your payment via Zelle to <strong>msmi.indianapolis@gmail.com</strong>.</p>";
+        paymentInstructions = "<div style='background-color:#FFF3B0;border:1px solid #FFD111;border-radius:6px;padding:12px 14px;margin:15px 0;'><p style='margin:0;'><strong style='color:#664D00;'>Payment Instructions (Zelle)</strong><br>Please send your payment via Zelle to <strong>msmi.indianapolis@gmail.com</strong>.</p></div>";
       } else if (paymentMode === "Check") {
-        paymentInstructions = "<p><strong>Payment Instructions (Check):</strong> Please make your check payable to <strong>Maharashtra Sneha Mandal of Indiana</strong>.</p>";
+        paymentInstructions = "<div style='background-color:#FFF3B0;border:1px solid #FFD111;border-radius:6px;padding:12px 14px;margin:15px 0;'><p style='margin:0;'><strong style='color:#664D00;'>Payment Instructions (Check)</strong><br>Please make your check payable to <strong>Maharashtra Sneha Mandal of Indiana</strong>.</p></div>";
       }
 
       var htmlBody = "<div style='font-family: Arial, sans-serif; font-size: 14px; color: #333333; line-height: 1.6;'>" +
@@ -83,13 +88,19 @@ function doPost(e) {
                      "<span style='font-style: italic; color: #555555;'>MSMI Committee 2027</span></p>" +
                    "</div>";
                       
-      // Send email to responder with CC to committee members
-      MailApp.sendEmail({
+      // Send email to the member, CC the spouse when provided, and BCC committee members
+      var emailOptions = {
         to: email,
-        cc: emailTeam,
+        bcc: emailTeam,
         subject: subject,
         htmlBody: htmlBody
-      });
+      };
+
+      if (spouseEmail) {
+        emailOptions.cc = spouseEmail;
+      }
+
+      MailApp.sendEmail(emailOptions);
     }
     
     return ContentService.createTextOutput(JSON.stringify({"result": "success"}))

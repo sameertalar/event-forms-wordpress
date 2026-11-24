@@ -79,7 +79,7 @@
 <!-- Form Container Wrapper -->
 <div id="formContainer" class="container-sm bg-white rounded-3 shadow-sm  mx-auto" style="max-width: 560px; ">
     
-    <form action="https://script.google.com/macros/s/AKfycbx83fNhA-sRpi8jufHtUP6VGdyGUHconJUMkak-ZL2FsqRMqQHEJdusGztoFL_mvSbj/exec" method="POST" id="membershipRegistrationForm" novalidate>
+    <form action="https://script.google.com/macros/s/AKfycbxQz07PCOIPpX7HwhjV8yqdVE-Fow7q7Jwpvqu7InEwh3c7UXvwj8yVqBnxLE2tkQ36/exec" method="POST" id="membershipRegistrationForm" novalidate>
         <div class="mb-4">
             Please complete the membership form and make a payment to become a registered MSMI member.
         </div>
@@ -91,19 +91,19 @@
                 <div class="form-check membership-option">
                     <input class="form-check-input" type="radio" id="annualIndividual" name="membershipType" value="Annual 2027 Individual" onchange="toggleFamilyFields()">
                     <label class="form-check-label w-100" for="annualIndividual">
-                        <span class="fw-semibold">Annual (Year 2027) Individual:</span> <strong class="fs-5 text-primary">$10</strong>
+                        <span class="fw-semibold">Annual 2027 - Individual:</span> <strong class="fs-5 text-primary">$10</strong>
                     </label>
                 </div>
                 <div class="form-check membership-option">
                     <input class="form-check-input" type="radio" id="lifetimeIndividual" name="membershipType" value="Lifetime Individual" checked onchange="toggleFamilyFields()">
                     <label class="form-check-label w-100" for="lifetimeIndividual">
-                        <span class="fw-semibold">Lifetime Individual:</span> <strong class="fs-5 text-primary">$65</strong>
+                        <span class="fw-semibold">Lifetime - Individual:</span> <strong class="fs-5 text-primary">$65</strong>
                     </label>
                 </div>
                 <div class="form-check membership-option">
                     <input class="form-check-input" type="radio" id="familyLifetime" name="membershipType" value="Lifetime Family" onchange="toggleFamilyFields()">
                     <label class="form-check-label w-100" for="familyLifetime">
-                        <span class="fw-semibold">Lifetime Family:</span> <strong class="fs-5 text-primary">$120</strong>
+                        <span class="fw-semibold">Lifetime - Family:</span> <strong class="fs-5 text-primary">$120</strong>
                         <span class="recommended-badge">MOST POPULAR</span>
                         <small class="d-block text-secondary mt-1">Members of the same household</small>
                     </label>
@@ -296,6 +296,7 @@ document.getElementById('membershipRegistrationForm').addEventListener('submit',
             form.style.display = 'none';
             feedback.style.color = 'green';
             feedback.innerHTML = '<div class="rounded-3 border border-success-subtle bg-success-subtle p-4 mx-auto" style="max-width: 480px;"><div class="display-6 mb-2" aria-hidden="true">✓</div><h4 class="fw-bold text-success mb-3">Registration Successful!</h4><p class="mb-0 text-dark">Your MSMI 2027 Membership registration has been saved, and a confirmation email has been sent.</p></div>';
+            document.getElementById('formContainer').scrollIntoView({ behavior: 'smooth', block: 'start' });
         } else {
             form.style.opacity = '1';
             form.style.pointerEvents = 'auto';
